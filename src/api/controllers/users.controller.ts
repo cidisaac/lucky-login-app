@@ -9,6 +9,7 @@ import {LocalAuthGuard} from "../../guards/local-auth.guard";
 import LoginResponse from "../dtos/login-response";
 import {JwtAuthGuard} from "../../guards/jwt-auth.guard";
 import {ProfileResponse} from "../dtos/profile-response";
+import {JoiValidationGuard} from "../../guards/joi-validation.guard";
 
 @Controller('/v1/api')
 export class UsersController {
@@ -24,9 +25,8 @@ export class UsersController {
         await this.usersService.register(userDto);
     }
 
-    @UseGuards(LocalAuthGuard)
+    @UseGuards(new JoiValidationGuard(loginUserSchema), LocalAuthGuard)
     @Post('/login')
-    @UsePipes(new JoiValidationPipe(loginUserSchema))
     async login(@Request() req): Promise<LoginResponse> {
         return await this.authService.login(req.user);
     }
