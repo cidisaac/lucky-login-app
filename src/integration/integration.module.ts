@@ -1,5 +1,5 @@
 import {Module} from "@nestjs/common";
-import UsersRepository from "./database/repository/UsersRepository";
+import UsersRepository from "./database/repository/users.repository";
 import {CustomLogger} from "../config/logger/custom-logger.service";
 
 

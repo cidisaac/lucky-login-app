@@ -1,4 +1,4 @@
-import CreateUserDto from "../../../api/dtos/CreateUserDto";
+import CreateUserDto from "../../../api/dtos/create-user.dto";
 
 export default class User {
     id: number;

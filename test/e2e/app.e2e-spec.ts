@@ -17,8 +17,8 @@ describe('UsersController (e2e)', () => {
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/ping')
       .expect(200)
-      .expect('Hello World!');
+      .expect('UP & RUNNING');
   });
 });

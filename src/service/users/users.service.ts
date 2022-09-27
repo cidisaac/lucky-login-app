@@ -1,8 +1,11 @@
-import {Injectable} from '@nestjs/common';
+import {HttpStatus, Injectable} from '@nestjs/common';
 import {CustomLogger} from "../../config/logger/custom-logger.service";
-import UsersRepository from "../../integration/database/repository/UsersRepository";
-import CreateUserDto from "../../api/dtos/CreateUserDto";
+import UsersRepository from "../../integration/database/repository/users.repository";
+import CreateUserDto from "../../api/dtos/create-user.dto";
 import {hash} from "../../utils/hash";
+import RegisterException from "../exceptions/register.exception";
+import User from "../../integration/database/models/user.model";
+import ProfileDao from "../../integration/database/dao/ProfileDao";
 
 @Injectable()
 export class UsersService {
@@ -21,6 +24,20 @@ export class UsersService {
 
         } catch (err) {
             this.logger.error('Error creating user:', err);
+
+            throw new RegisterException(
+                err.message,
+                HttpStatus.BAD_REQUEST,
+                'REGISTER_EXCEPTION',
+                'Register exception')
         }
+    }
+
+    async findOne(username: string): Promise<User> {
+        return await this.usersRepository.getByUsername(username);
+    }
+
+    async getProfileById(id: number): Promise<ProfileDao> {
+        return await this.usersRepository.getProfileByUserId(id);
     }
 }

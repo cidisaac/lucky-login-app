@@ -11,16 +11,19 @@ SELECT *
 FROM profile;
 
 SELECT *
-FROM "user";
+FROM users;
 
 SELECT profile.id,
-       u.username,
-       u.password,
-       a.street,
-       c.name,
-       c2.name
+       users.username,
+       address.street,
+       city.name,
+       country.name
 FROM profile
-         INNER JOIN "user" u on u.id = profile.userId
-         INNER JOIN address a on a.id = profile.addressId
-         INNER JOIN city c on c.id = a.cityId
-         INNER JOIN country c2 on c2.id = c.countryId;
+         INNER JOIN users on users.id = profile.userId
+         INNER JOIN address on address.id = profile.addressId
+         INNER JOIN city on city.id = address.cityId
+         INNER JOIN country on country.id = city.countryId
+
+where profile.userid = 1
+
+;
