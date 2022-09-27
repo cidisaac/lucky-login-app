@@ -13,6 +13,7 @@ export default () => ({
     },
     redis: {
         port: parseInt(process.env.REDIS_PORT) || 6379,
-        host: process.env.REDIS_HOST || 'localhost'
+        host: process.env.REDIS_HOST || 'localhost',
+        ttl: process.env.REDIS_TTL || '120s'
     }
 });

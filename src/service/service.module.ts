@@ -7,15 +7,20 @@ import {JwtModule} from "@nestjs/jwt";
 import AuthService from "./auth/auth.service";
 import JwtStrategy from "./auth/jwt.strategy";
 import {LocalStrategy} from "./auth/local.strategy";
+import {ConfigService} from "@nestjs/config";
 
 @Module({
     imports: [
         ConfigurationModule,
         IntegrationModule,
         PassportModule,
-        JwtModule.register({
-            secret: process.env.JWT_SECRET || 'secretKKKKEY',
-            signOptions: {expiresIn: '999s'},
+        JwtModule.registerAsync({
+            imports: [ConfigurationModule],
+            useFactory: async (configService: ConfigService) => ({
+                secret: configService.get('jwt.secret'),
+                signOptions: {expiresIn: configService.get('redis.ttl')},
+            }),
+            inject: [ConfigService]
         }),
     ],
     providers: [
