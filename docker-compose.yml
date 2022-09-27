@@ -1,11 +1,11 @@
 version: '3.8'
 services:
-#  redis_db:
-#    image: redis:latest
-#    ports:
-#      - 6379:6379
-#    networks:
-#      - nesjs-network
+  redis_db:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks:
+      - nesjs-network
   db:
     image: postgres:latest
     restart: always
@@ -37,12 +37,12 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
     depends_on:
-#      - redis_db
+      - redis_db
       - db
     links:
       - db
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/ping"]
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/ping" ]
       retries: 5
       start_period: 20s
       timeout: 10s
