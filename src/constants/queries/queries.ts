@@ -10,7 +10,7 @@ export const getProfile = 'SELECT profile.id, profile.name, address.street,' +
 export const getUserByUsername = 'SELECT * FROM users WHERE username=$1';
 
 export const createUser = 'INSERT INTO users(username, password) ' +
-    'VALUES (${username}, ${password}) RETURNING id';
+    'VALUES (${username}, ${password}) RETURNING id,username,password';
 
 export const createProfile = 'INSERT INTO profile(userId, addressId, name)' +
     ' VALUES (${userId}, ${addressId}, ${name}) RETURNING id';

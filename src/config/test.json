@@ -1,0 +1,14 @@
+{
+  "node_port": 3000,
+  "tsEnv": "dev",
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "luckydb",
+    "user": "root",
+    "password": "root"
+  },
+  "jwt": {
+    "secret": "secretKey"
+  }
+}

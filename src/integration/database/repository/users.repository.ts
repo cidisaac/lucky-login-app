@@ -1,6 +1,6 @@
 import UsersRepositoryInterface from "../interfaces/users-repository.interface";
 import User from "../models/user.model";
-import {BadRequestException, Inject, Injectable, NotFoundException} from "@nestjs/common";
+import {BadRequestException, HttpStatus, Inject, Injectable, NotFoundException} from "@nestjs/common";
 import {NEST_PGPROMISE_CONNECTION} from "nestjs-pgpromise";
 import {IDatabase} from "pg-promise";
 import CreateUserDto from "../../../api/dtos/create-user.dto";
@@ -14,6 +14,7 @@ import {
     getProfile,
     getUserByUsername
 } from "../../../constants/queries/queries";
+import CreateUserException from "../../exceptions/CreateUserException";
 
 @Injectable()
 export default class UsersRepository implements UsersRepositoryInterface {
@@ -54,7 +55,13 @@ export default class UsersRepository implements UsersRepositoryInterface {
             })
             .catch((err) => {
                 this.logger.error('Usuario no creado: ', err);
-            })
+                throw new CreateUserException(
+                    err.message,
+                    HttpStatus.BAD_REQUEST,
+                    'CREATE_USER_ERROR',
+                    'Error creating user'
+                )
+            });
     }
 
     async getByUsername(username: string): Promise<User> {

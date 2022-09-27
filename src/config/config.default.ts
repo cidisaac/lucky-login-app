@@ -10,5 +10,9 @@ export default () => ({
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'secretKey'
+    },
+    redis: {
+        port: parseInt(process.env.REDIS_PORT) || 6379,
+        host: process.env.REDIS_HOST || 'localhost'
     }
 });
