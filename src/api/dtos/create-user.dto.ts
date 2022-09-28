@@ -2,6 +2,6 @@ export default class CreateUserDto {
     username: string;
     password: string;
     name: string;
-    addressId: number;
+    address: string;
     cityId: number;
 }

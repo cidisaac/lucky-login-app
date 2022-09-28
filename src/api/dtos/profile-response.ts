@@ -1,4 +1,4 @@
-import ProfileDao from "../../integration/database/dao/ProfileDao";
+import ProfileDao from "../../integration/database/dao/profile.dao";
 
 export class ProfileResponse {
     id: number;

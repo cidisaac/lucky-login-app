@@ -33,6 +33,7 @@
     "mask-json": "^1.0.3",
     "maskdata": "^1.1.10",
     "nestjs-pgpromise": "^2.0.1",
+    "node-mocks-http": "^1.11.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

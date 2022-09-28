@@ -6,8 +6,9 @@ import {IDatabase} from "pg-promise";
 import CreateUserDto from "../../../api/dtos/create-user.dto";
 import {CustomLogger} from "../../../config/logger/custom-logger.service";
 import Profile from "../models/profile.model";
-import ProfileDao from "../dao/ProfileDao";
+import ProfileDao from "../dao/profile.dao";
 import {
+    createAddress,
     createProfile,
     createUser,
     getAllUsers,
@@ -17,6 +18,7 @@ import {
 import CreateUserException from "../../exceptions/create-user.exception";
 import UserNotFoundException from "../../exceptions/user-not-found.exception";
 import ProfileNotFoundException from "../../exceptions/profile-not-found.exception";
+import Address from "../models/address.model";
 
 @Injectable()
 export default class UsersRepository implements UsersRepositoryInterface {
@@ -35,23 +37,9 @@ export default class UsersRepository implements UsersRepositoryInterface {
     async create(createUserDto: CreateUserDto): Promise<void> {
 
         const user = User.fromCreateUserDto(createUserDto);
+        const address = Address.fromCreateUserDto(createUserDto);
         const profile = Profile.fromCreateUserDto(createUserDto);
-        await this.pg.tx(async t1 => {
-            const userId = await t1
-                .one(createUser,
-                    user,
-                    a => a.id
-                );
-            return await t1.tx(async t2 => {
-                profile.userId = userId;
-                const profileId = await t2
-                    .one(createProfile,
-                        profile,
-                        a => a.id
-                    );
-                return {userId, profileId};
-            })
-        })
+        return await this.pg.tx(this.usersTx(user, address, profile))
             .then((data) => {
                 this.logger.info('Usuario creado correctamente con profile: ', data)
             })
@@ -91,6 +79,41 @@ export default class UsersRepository implements UsersRepositoryInterface {
             );
         }
 
+    }
+
+    private usersTx(user: User, address: Address, profile: Profile) {
+        return async t1 => {
+            const userId = await t1
+                .one(createUser,
+                    user,
+                    a => a.id
+                );
+            return await t1.tx(this.addressTx(address, profile, userId))
+        };
+    }
+
+    private addressTx(address: Address, profile: Profile, userId: any) {
+        return async t2 => {
+            const addressId = await t2
+                .one(createAddress,
+                    address,
+                    a => a.id
+                );
+            return await t2.tx(this.profileTx(profile, userId, addressId))
+        };
+    }
+
+    private profileTx(profile: Profile, userId: number, addressId: number) {
+        return async t3 => {
+            profile.userId = userId;
+            profile.addressId = addressId;
+            const profileId = await t3
+                .one(createProfile,
+                    profile,
+                    a => a.id
+                );
+            return {userId, profileId, addressId};
+        };
     }
 
 }

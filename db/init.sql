@@ -59,12 +59,12 @@ VALUES (1, 'Buenos Aires'),
        (2, 'Valparaiso'),
        (3, 'Rio de Janeiro');
 
-INSERT INTO address(cityId, street)
-VALUES (1, 'Las Heras 1650'),
-       (2, 'Av. Fernet 1234'),
-       (3, 'Grecia 2120'),
-       (4, 'Av. Valparaiso 42'),
-       (5, 'Av. Atlantica 220');
+-- INSERT INTO address(cityId, street)
+-- VALUES (1, 'Las Heras 1650'),
+--        (2, 'Av. Fernet 1234'),
+--        (3, 'Grecia 2120'),
+--        (4, 'Av. Valparaiso 42'),
+--        (5, 'Av. Atlantica 220');
 
 -- INSERT INTO users(username, password)
 -- VALUES ('elisa', 'passwordElisa'),

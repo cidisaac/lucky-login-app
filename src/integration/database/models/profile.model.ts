@@ -7,14 +7,12 @@ export default class Profile {
     addressId: number;
     name: string;
 
-    constructor(addressId, name) {
-        this.addressId = addressId;
+    constructor(name) {
         this.name = name;
     }
 
     static fromCreateUserDto(createUserDto: CreateUserDto): Profile {
         return new Profile(
-            createUserDto.addressId,
             createUserDto.name
         );
     }

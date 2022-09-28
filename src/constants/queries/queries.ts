@@ -15,4 +15,7 @@ export const createUser = 'INSERT INTO users(username, password) ' +
 export const createProfile = 'INSERT INTO profile(userId, addressId, name)' +
     ' VALUES (${userId}, ${addressId}, ${name}) RETURNING id';
 
+export const createAddress = 'INSERT INTO address(cityId, street) ' +
+    'VALUES (${cityId}, ${street}) RETURNING id'
+
 export const getAllUsers = 'SELECT id, username, password FROM users';

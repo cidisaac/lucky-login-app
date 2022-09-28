@@ -5,7 +5,10 @@ import RedisClient from "./cache/redis/redis.client";
 
 @Module({
     providers: [
-        UsersRepository,
+        {
+            provide: 'UsersRepositoryInterface',
+            useClass: UsersRepository
+        },
         CustomLogger,
         {
             provide: 'CacheClient',
@@ -13,7 +16,10 @@ import RedisClient from "./cache/redis/redis.client";
         }
     ],
     exports: [
-        UsersRepository,
+        {
+            provide: 'UsersRepositoryInterface',
+            useClass: UsersRepository
+        },
         {
             provide: 'CacheClient',
             useClass: RedisClient

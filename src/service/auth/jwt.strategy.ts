@@ -3,15 +3,15 @@ import {ExtractJwt, Strategy} from "passport-jwt";
 import {Inject, Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {CustomLogger} from "../../config/logger/custom-logger.service";
-import {UsersService} from "../users/users.service";
 import {ProfileResponse} from "../../api/dtos/profile-response";
 import RedisClient from "../../integration/cache/redis/redis.client";
+import UsersServiceInterface from "../interfaces/users-service.interface";
 
 @Injectable()
 export default class JwtStrategy extends PassportStrategy(Strategy) {
 
     constructor(
-        private readonly usersService: UsersService,
+        @Inject('UsersServiceInterface') private readonly usersService: UsersServiceInterface,
         private readonly configService: ConfigService,
         private readonly logger: CustomLogger,
         @Inject('CacheClient') private readonly redis: RedisClient) {

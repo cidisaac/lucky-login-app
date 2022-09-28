@@ -1,20 +1,20 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {CustomLogger} from "../../config/logger/custom-logger.service";
-import UsersRepository from "../../integration/database/repository/users.repository";
 import CreateUserDto from "../../api/dtos/create-user.dto";
 import {hash} from "../../utils/hash";
 import RegisterException from "../exceptions/register.exception";
 import User from "../../integration/database/models/user.model";
-import ProfileDao from "../../integration/database/dao/ProfileDao";
-import RedisClient from "../../integration/cache/redis/redis.client";
+import ProfileDao from "../../integration/database/dao/profile.dao";
+import UsersServiceInterface from "../interfaces/users-service.interface";
+import UsersRepositoryInterface from "../../integration/database/interfaces/users-repository.interface";
 
 @Injectable()
-export class UsersService {
+export class UsersService implements UsersServiceInterface {
 
     constructor(
-        private readonly usersRepository: UsersRepository,
-        private readonly logger: CustomLogger,
-        @Inject('CacheClient') private readonly redis: RedisClient) {
+        @Inject('UsersRepositoryInterface') private readonly usersRepository: UsersRepositoryInterface,
+        private readonly logger: CustomLogger
+    ) {
         this.logger.setContext(UsersService.name);
     }
 

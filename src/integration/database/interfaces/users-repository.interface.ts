@@ -1,6 +1,6 @@
 import User from "../models/user.model";
 import CreateUserDto from "../../../api/dtos/create-user.dto";
-import ProfileDao from "../dao/ProfileDao";
+import ProfileDao from "../dao/profile.dao";
 
 export default interface UsersRepositoryInterface {
     getAll(): Promise<User[]>;

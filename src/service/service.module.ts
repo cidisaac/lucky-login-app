@@ -24,14 +24,26 @@ import {ConfigService} from "@nestjs/config";
         }),
     ],
     providers: [
-        UsersService,
-        AuthService,
+        {
+            provide: 'UsersServiceInterface',
+            useClass: UsersService
+        },
+        {
+            provide: 'AuthServiceInterface',
+            useClass: AuthService
+        },
         JwtStrategy,
         LocalStrategy
     ],
     exports: [
-        UsersService,
-        AuthService
+        {
+            provide: 'UsersServiceInterface',
+            useClass: UsersService
+        },
+        {
+            provide: 'AuthServiceInterface',
+            useClass: AuthService
+        }
     ]
 })
 export class ServicesModule {

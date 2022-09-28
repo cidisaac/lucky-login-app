@@ -1,23 +1,28 @@
-import {UsersService} from "../users/users.service";
 import {JwtService} from "@nestjs/jwt";
 import {isMatch} from "../../utils/hash";
-import {Injectable} from "@nestjs/common";
+import {Inject, Injectable} from "@nestjs/common";
+import AuthServiceInterface from "../interfaces/auth-service.interface";
+import UsersServiceInterface from "../interfaces/users-service.interface";
 
 @Injectable()
-export default class AuthService {
+export default class AuthService implements AuthServiceInterface {
     constructor(
-        private readonly usersService: UsersService,
+        @Inject('UsersServiceInterface') private readonly usersService: UsersServiceInterface,
         private readonly jwtService: JwtService
     ) {
     }
 
     async validateUser(username: string, pass: string): Promise<any> {
         const user = await this.usersService.findOne(username);
-        const passwordMatch = await isMatch(pass, user.password);
-        if (user && passwordMatch) {
+
+        if (user) {
             const {password, ...result} = user;
-            return result;
+            const passwordMatch = await isMatch(pass, user.password);
+            return passwordMatch
+                ? result
+                : null
         }
+
         return null;
     }
 
@@ -27,5 +32,4 @@ export default class AuthService {
             access_token: this.jwtService.sign(payload),
         };
     }
-
 }
