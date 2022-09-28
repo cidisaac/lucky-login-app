@@ -30,6 +30,12 @@ services:
     command: npm run start:dev
     ports:
       - 3000:3000
+    environment:
+      - JWT_SECRET=secretKey
+      - REDIS_HOST=redis_db
+      - REDIS_TTL=120s
+      - DB_HOST=db
+      - DB_PORT=5432
     networks:
       - nesjs-network
     volumes:

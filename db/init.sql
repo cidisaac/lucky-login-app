@@ -66,13 +66,13 @@ VALUES (1, 'Las Heras 1650'),
        (4, 'Av. Valparaiso 42'),
        (5, 'Av. Atlantica 220');
 
-INSERT INTO users(username, password)
-VALUES ('elisa', 'passwordElisa'),
-       ('majito', 'passwordMajito'),
-       ('dinho', 'passwordDinho');
-
-INSERT INTO profile(userId, addressId, name)
-VALUES (1, 1, 'Isaac Cid'),
-       (2, 4, 'Maria Jose'),
-       (3, 5, 'Ronaldinho Gaucho');
+-- INSERT INTO users(username, password)
+-- VALUES ('elisa', 'passwordElisa'),
+--        ('majito', 'passwordMajito'),
+--        ('dinho', 'passwordDinho');
+--
+-- INSERT INTO profile(userId, addressId, name)
+-- VALUES (1, 1, 'Isaac Cid'),
+--        (2, 4, 'Maria Jose'),
+--        (3, 5, 'Ronaldinho Gaucho');
 

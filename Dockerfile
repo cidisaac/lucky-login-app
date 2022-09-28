@@ -6,12 +6,6 @@ RUN apt-get update
 RUN apt-get install -y gcc
 RUN apt-get install -y curl
 
-ENV REDIS_HOST redis_db
-ENV REDIS_TTL 120s
-ENV DB_HOST db
-ENV DB_PORT 5432
-ENV JWT_SECRET secretKey
-
 COPY package*.json ./
 
 RUN npm install --legacy-peer-deps glob rimraf

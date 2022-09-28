@@ -53,7 +53,7 @@ export default class UsersRepository implements UsersRepositoryInterface {
             })
         })
             .then((data) => {
-                this.logger.log('Usuario creado correctamente con profile: ', data)
+                this.logger.info('Usuario creado correctamente con profile: ', data)
             })
             .catch((err) => {
                 this.logger.error('Usuario no creado: ', err);
@@ -69,7 +69,8 @@ export default class UsersRepository implements UsersRepositoryInterface {
         try {
             return await this.pg.one(getUserByUsername, [username]);
         } catch (err) {
-            this.logger.error('Usuario no encontrado', err);
+            this.logger.error('Usuario no encontrado', {username: username});
+            this.logger.debug('Usuario no encontrado', err);
             throw new UserNotFoundException(
                 err.message,
                 'User not found exception'

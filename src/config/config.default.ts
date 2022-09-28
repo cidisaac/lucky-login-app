@@ -1,6 +1,6 @@
 export default () => ({
     node_port: process.env.NODE_PORT || 3000,
-    tsEnv: process.env.TS_ENV,
+    tsEnv: process.env.TS_ENV || 'dev',
     db: {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -15,5 +15,6 @@ export default () => ({
         port: parseInt(process.env.REDIS_PORT) || 6379,
         host: process.env.REDIS_HOST || 'localhost',
         ttl: process.env.REDIS_TTL || '120s'
-    }
+    },
+    sensitive_data: process.env.SENSITIVE_DATA || 'query|password',
 });
