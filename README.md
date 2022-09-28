@@ -42,7 +42,7 @@ curl --location --request POST 'http://localhost:3000/v1/api/register' \
     "username": "prueba",
     "password": "pruebaPass",
     "name": "Pruebas",
-    "addressId": 3,
+    "address": "Siempre Viva 123",
     "cityId": 1
 }'
 ```
