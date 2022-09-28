@@ -2,7 +2,7 @@ import GenericException from "../../utils/exceptions/generic.exception";
 import {HttpStatus} from "@nestjs/common";
 import {ERROR_CODES} from "../../constants/constants";
 
-export default class ParametersException extends GenericException {
+export default class CreateUserException extends GenericException {
     constructor(
         message: string,
         title: string,
@@ -10,7 +10,7 @@ export default class ParametersException extends GenericException {
         error_code?: string,
     ) {
         status = HttpStatus.BAD_REQUEST;
-        error_code = ERROR_CODES.PARAMETERS_EXCEPTION;
+        error_code = ERROR_CODES.CREATE_USER_EXCEPTION;
         super(message, status, title, error_code);
     }
 }

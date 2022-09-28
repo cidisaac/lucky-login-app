@@ -1,4 +1,4 @@
-import {CanActivate, ExecutionContext, HttpStatus, Injectable} from "@nestjs/common";
+import {CanActivate, ExecutionContext, Injectable} from "@nestjs/common";
 import ParametersException from "../api/exceptions/parameters.exception";
 import {ObjectSchema} from "joi";
 
@@ -13,8 +13,6 @@ export class JoiValidationGuard implements CanActivate {
         if (error) {
             throw new ParametersException(
                 error.message,
-                HttpStatus.BAD_REQUEST,
-                'PARAMETERS_EXCEPTION',
                 'Parameters exception'
             );
         }

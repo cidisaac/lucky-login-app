@@ -1,4 +1,4 @@
-import {HttpStatus, Inject, Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {CustomLogger} from "../../config/logger/custom-logger.service";
 import UsersRepository from "../../integration/database/repository/users.repository";
 import CreateUserDto from "../../api/dtos/create-user.dto";
@@ -22,16 +22,15 @@ export class UsersService {
 
         try {
             createUserDto.password = await hash(createUserDto.password);
-            const userData = await this.usersRepository.create(createUserDto);
+            await this.usersRepository.create(createUserDto);
 
         } catch (err) {
             this.logger.error('Error creating user:', err);
 
             throw new RegisterException(
                 err.message,
-                HttpStatus.BAD_REQUEST,
-                'REGISTER_EXCEPTION',
-                'Register exception')
+                'Register exception'
+            )
         }
     }
 

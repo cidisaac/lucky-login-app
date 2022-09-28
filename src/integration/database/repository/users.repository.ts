@@ -1,6 +1,6 @@
 import UsersRepositoryInterface from "../interfaces/users-repository.interface";
 import User from "../models/user.model";
-import {BadRequestException, HttpStatus, Inject, Injectable, NotFoundException} from "@nestjs/common";
+import {Inject, Injectable} from "@nestjs/common";
 import {NEST_PGPROMISE_CONNECTION} from "nestjs-pgpromise";
 import {IDatabase} from "pg-promise";
 import CreateUserDto from "../../../api/dtos/create-user.dto";
@@ -14,7 +14,9 @@ import {
     getProfile,
     getUserByUsername
 } from "../../../constants/queries/queries";
-import CreateUserException from "../../exceptions/CreateUserException";
+import CreateUserException from "../../exceptions/create-user.exception";
+import UserNotFoundException from "../../exceptions/user-not-found.exception";
+import ProfileNotFoundException from "../../exceptions/profile-not-found.exception";
 
 @Injectable()
 export default class UsersRepository implements UsersRepositoryInterface {
@@ -57,8 +59,6 @@ export default class UsersRepository implements UsersRepositoryInterface {
                 this.logger.error('Usuario no creado: ', err);
                 throw new CreateUserException(
                     err.message,
-                    HttpStatus.BAD_REQUEST,
-                    'CREATE_USER_ERROR',
                     'Error creating user'
                 )
             });
@@ -67,30 +67,27 @@ export default class UsersRepository implements UsersRepositoryInterface {
     async getByUsername(username: string): Promise<User> {
 
         try {
-            const user = await this.pg.oneOrNone(getUserByUsername, [username]);
-
-            if (!user) {
-                throw new NotFoundException();
-            }
-            return user;
+            return await this.pg.one(getUserByUsername, [username]);
         } catch (err) {
-            throw new BadRequestException();
+            this.logger.error('Usuario no encontrado', err);
+            throw new UserNotFoundException(
+                err.message,
+                'User not found exception'
+            );
         }
     }
 
     async getProfileByUserId(id: number): Promise<ProfileDao> {
 
         try {
-            const profile = await this.pg
-                .oneOrNone(getProfile, [id]);
-
-            if (!profile) {
-                throw new NotFoundException();
-            }
+            const profile = await this.pg.one(getProfile, [id]);
 
             return profile as ProfileDao;
         } catch (err) {
-            throw new BadRequestException();
+            throw new ProfileNotFoundException(
+                err.message,
+                'Profile not found exception'
+            );
         }
 
     }

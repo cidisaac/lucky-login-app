@@ -1,4 +1,4 @@
-import {ArgumentMetadata, HttpStatus, Injectable, PipeTransform} from '@nestjs/common';
+import {ArgumentMetadata, Injectable, PipeTransform} from '@nestjs/common';
 import {ObjectSchema} from 'joi';
 import ParametersException from "../api/exceptions/parameters.exception";
 
@@ -13,8 +13,6 @@ export class JoiValidationPipe implements PipeTransform {
         if (error) {
             throw new ParametersException(
                 error.message,
-                HttpStatus.BAD_REQUEST,
-                'PARAMETERS_EXCEPTION',
                 'Parameters exception'
             );
         }
