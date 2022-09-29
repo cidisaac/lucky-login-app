@@ -9,11 +9,16 @@ Login with Nodejs using
 
 In root folder run:
 
+
+```bash
+docker compose build
+```
+
 ```bash
 docker compose up
 ```
 
-This command should start 3 containers:
+This commands should start 3 containers:
 
 * redis
 * postgres
@@ -71,7 +76,7 @@ users:
 
 ### Api Examples
 
-#### SignIn user
+#### SignUp user
 
 ```bash
 curl --location --request POST 'http://localhost:3000/v1/api/register' \
@@ -85,7 +90,7 @@ curl --location --request POST 'http://localhost:3000/v1/api/register' \
 }'
 ```
 
-#### Login user
+#### SignIn user
 
 ```bash
 curl --location --request POST 'http://localhost:3000/v1/api/login' \
