@@ -11,7 +11,7 @@ import {JoiValidationGuard} from "../../guards/joi-validation.guard";
 import UsersServiceInterface from "../../service/interfaces/users-service.interface";
 import AuthServiceInterface from "../../service/interfaces/auth-service.interface";
 
-@Controller('/v1/api')
+@Controller('/api/v1')
 export class UsersController {
     constructor(
         @Inject('UsersServiceInterface') private readonly usersService: UsersServiceInterface,
