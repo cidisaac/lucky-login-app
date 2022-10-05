@@ -79,7 +79,7 @@ users:
 #### SignUp user
 
 ```bash
-curl --location --request POST 'http://localhost:3000/v1/api/register' \
+curl --location --request POST 'http://localhost:3000/api/v1/register' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "prueba",
@@ -93,7 +93,7 @@ curl --location --request POST 'http://localhost:3000/v1/api/register' \
 #### SignIn user
 
 ```bash
-curl --location --request POST 'http://localhost:3000/v1/api/login' \
+curl --location --request POST 'http://localhost:3000/api/v1/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username":"prueba",
@@ -112,7 +112,7 @@ Returns:
 #### Get Profile
 
 ```bash
-curl --location --request GET 'http://localhost:3000/v1/api/profile' \
+curl --location --request GET 'http://localhost:3000/api/v1/profile' \
 --header 'Authorization: Bearer {{access_token}}'
 ```
 
